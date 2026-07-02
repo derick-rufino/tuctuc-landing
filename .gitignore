@@ -1,0 +1,10 @@
+# Binários / APK (excedem o limite de 100 MB do GitHub)
+*.apk
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Dependências / build
+node_modules/
+dist/
