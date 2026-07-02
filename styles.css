@@ -300,6 +300,9 @@ body {
 .download-inner > p b { color: #BDE09F; }
 .btn-download { margin-top: 22px; padding: 15px 30px; font-size: 17px; }
 .download-meta { margin-top: 14px; font-size: 13px; color: rgba(255,255,255,.6); }
+/* Letra miúda de consentimento — discreta de propósito, sob o botão de download */
+.download-terms { margin: 10px auto 0; max-width: 440px; font-size: 11px; line-height: 1.55; color: rgba(255,255,255,.45); }
+.download-terms a { color: rgba(255,255,255,.66); text-decoration: underline; }
 .download-note { margin-top: 12px; font-size: 14px; color: #FFD9A8; }
 
 /* Footer */
@@ -308,7 +311,10 @@ body {
 .footer-brand { display: flex; align-items: center; gap: 9px; }
 .footer-brand img { border-radius: var(--r-md); }
 .footer-brand .brand-name { font-size: 18px; }
+.footer-legal { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .footer-copy { font-size: 13px; color: var(--text-tertiary); }
+.footer-link { font-size: 13px; color: var(--text-tertiary); text-decoration: none; }
+.footer-link:hover { color: var(--text-secondary); text-decoration: underline; }
 
 /* ─────────────────────── Responsivo ─────────────────────── */
 @media (max-width: 900px) {
