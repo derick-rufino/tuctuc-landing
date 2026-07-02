@@ -130,6 +130,22 @@ body {
 .hero-meta li { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; color: var(--text-secondary); }
 .hero-meta .ic { width: 18px; height: 18px; color: var(--green-700); }
 
+/* QR de download no hero */
+.hero-qr {
+  display: inline-flex; align-items: center; gap: 20px;
+  margin: 0 0 24px; padding: 18px;
+  background: var(--surface-card);
+  border: 1px solid var(--green-200); border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(45, 80, 22, .10);
+  text-decoration: none; max-width: 460px;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.hero-qr:hover { border-color: var(--green-500); box-shadow: 0 14px 36px rgba(45, 80, 22, .16); transform: translateY(-2px); }
+.hero-qr-img { width: 168px; height: 168px; flex: none; display: block; border-radius: 12px; background: #fff; }
+.hero-qr-text { display: flex; flex-direction: column; gap: 5px; }
+.hero-qr-text b { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+.hero-qr-text span { font-size: 13.5px; line-height: 1.45; color: var(--text-secondary); }
+
 /* ─────────────────────── Phones (mockups) ─────────────────────────────
    Frame: flagship Android (Pixel 9 Pro / Galaxy S25). Bezel fino e UNIFORME,
    cantos CONCÊNTRICOS (raio externo = interno + bezel), furo de câmera central.
@@ -326,6 +342,9 @@ body {
   .hero-copy { text-align: center; }
   .hero-sub { margin-left: auto; margin-right: auto; }
   .hero-actions, .hero-meta { justify-content: center; }
+  .hero-qr { margin-left: auto; margin-right: auto; }
+  .hero-qr-text { text-align: left; }
+  .hero-qr-img { width: 148px; height: 148px; }
   .hero-visual { margin-top: 14px; }
   .features { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
