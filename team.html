@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipe — Tuctuc</title>
+  <meta name="description" content="As mentes por trás do Tuctuc — equipe do projeto." />
+
+  <link rel="icon" type="image/png" href="assets/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────── Página EQUIPE — brutalista ─────────── */
+    :root {
+      --bg:    #103A33;   /* verde-teal escuro (fundo)  */
+      --bg-2:  #0B2A25;   /* verde mais escuro          */
+      --lime:  #89BF58;   /* pílula / destaque (brand)  */
+      --lime-d:#6AA33C;
+      --ink:   #08201B;   /* texto sobre lime / bordas  */
+      --paper: #F2F5EE;   /* texto claro                */
+      --line:  #08201B;   /* bordas duras               */
+      --mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      --sans:  "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--paper);
+      font-family: var(--sans);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+
+    /* Barra superior — mono, dura */
+    .topbar {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      border-bottom: 3px solid var(--line);
+      background: var(--bg-2);
+    }
+    .topbar a { text-decoration: none; color: var(--paper); }
+    .topbar a:hover { color: var(--lime); }
+    .topbar .brand { font-weight: 700; letter-spacing: .12em; }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 22px 64px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* ── Coluna esquerda: integrantes ── */
+    .roster { display: flex; flex-direction: column; gap: 20px; }
+
+    .member {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+      transition: transform .08s ease;
+    }
+    .avatar {
+      flex: 0 0 auto;
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 3px solid var(--line);
+      box-shadow: 6px 6px 0 rgba(0,0,0,.38);
+      z-index: 2;
+    }
+    .member:nth-child(2n) .avatar { background: var(--lime); }
+
+    .plate {
+      flex: 1 1 auto;
+      margin-left: -22px;                /* sobrepõe a pílula ao círculo (ref.) */
+      padding: 16px 22px 16px 40px;
+      background: var(--lime);
+      color: var(--ink);
+      border: 3px solid var(--line);
+      border-radius: 999px;
+      box-shadow: 6px 6px 0 rgba(0,0,0,.38);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 84px;
+    }
+    .plate .name { font-size: clamp(18px, 2.4vw, 24px); font-weight: 700; line-height: 1.05; }
+    .plate .link {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 5px 11px;
+      background: transparent;
+    }
+    .member:hover { transform: translate(-2px, -2px); }
+    .member:hover .avatar,
+    .member:hover .plate { box-shadow: 9px 9px 0 rgba(0,0,0,.42); }
+    .member:hover .plate .link { background: var(--ink); color: var(--lime); }
+
+    /* ── Coluna direita: título ── */
+    .lead { position: relative; }
+    .year { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--lime); }
+    .kicker {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(242,245,238,.7);
+      margin: 26px 0 12px;
+      border-top: 3px solid var(--line);
+      padding-top: 12px;
+    }
+    .title {
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: .98;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+    .title .hl { color: var(--lime); }
+    .sub {
+      margin-top: 20px;
+      max-width: 46ch;
+      color: rgba(242,245,238,.82);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .pageno {
+      margin-top: 40px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .1em;
+      color: var(--lime);
+    }
+
+    /* ── Responsivo ── */
+    @media (max-width: 860px) {
+      .wrap { grid-template-columns: 1fr; gap: 34px; }
+      .lead { order: -1; }
+      .kicker { margin-top: 6px; }
+    }
+    @media (max-width: 440px) {
+      .avatar { width: 66px; height: 66px; font-size: 21px; }
+      .plate { min-height: 66px; margin-left: -20px; padding-left: 34px; }
+      .plate .link { display: none; }   /* mobile: a pílula inteira já é o link */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a href="index.html">‹ Voltar ao início</a>
+    <span class="brand">tuctuc</span>
+  </div>
+
+  <main class="wrap">
+
+    <!-- INTEGRANTES -->
+    <section class="roster">
+      <a class="member" href="https://www.linkedin.com/in/derick-rufino" target="_blank" rel="noopener">
+        <span class="avatar">DR</span>
+        <span class="plate">
+          <span class="name">Derick Rufino</span>
+          <span class="link">LinkedIn ↗</span>
+        </span>
+      </a>
+
+      <a class="member" href="https://www.linkedin.com/in/guilhermemmonteiro/" target="_blank" rel="noopener">
+        <span class="avatar">GM</span>
+        <span class="plate">
+          <span class="name">Guilherme Matchin</span>
+          <span class="link">LinkedIn ↗</span>
+        </span>
+      </a>
+
+      <a class="member" href="https://www.linkedin.com/in/ana-julia-quel%C3%A9-b66037373/" target="_blank" rel="noopener">
+        <span class="avatar">AJ</span>
+        <span class="plate">
+          <span class="name">Ana Julia Quelé</span>
+          <span class="link">LinkedIn ↗</span>
+        </span>
+      </a>
+
+      <a class="member" href="https://www.linkedin.com/in/clara-gabriele-nogueira-ramos-a8a216354/" target="_blank" rel="noopener">
+        <span class="avatar">CG</span>
+        <span class="plate">
+          <span class="name">Clara Gabriele Ramos</span>
+          <span class="link">LinkedIn ↗</span>
+        </span>
+      </a>
+    </section>
+
+    <!-- TÍTULO -->
+    <section class="lead">
+      <p class="year">2026</p>
+      <p class="kicker">Equipe · TCC</p>
+      <h1 class="title">As mentes<br />por trás do<br /><span class="hl">Tuctuc</span></h1>
+      <p class="sub">O grupo por trás do projeto de caronas solidárias entre estudantes. Conecte-se com a gente no LinkedIn.</p>
+      <p class="pageno">PÁGINA 11</p>
+    </section>
+
+  </main>
+
+</body>
+</html>
