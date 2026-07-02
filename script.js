@@ -5,13 +5,13 @@
   "use strict";
 
   /* ── Configuração do APK ──────────────────────────────────────
-     Ajuste ao gerar uma nova build. O arquivo .apk deve ficar na
-     MESMA pasta deste site (ao lado de index.html) com o nome em
-     APK.file — é o que faz o botão baixar na hora, sem redirecionar. */
+     O APK é distribuído via GitHub Releases (arquivos grandes não
+     cabem no repositório). Ao publicar uma nova build, crie um novo
+     release e atualize APK.url + version + size aqui. */
   var APK = {
-    file: "tuctuc.apk",
+    url: "https://github.com/derick-rufino/tuctuc-landing/releases/download/v0.5.0-beta.1/tuctuc.apk",
     version: "0.5.0-beta.1",   // espelha package.json / app.json do app
-    size: "~40 MB",
+    size: "~100 MB",
   };
 
   /* ── Ano no rodapé ── */
@@ -58,40 +58,10 @@
     }
   }
 
-  /* ── Botão principal → aponta para o APK ── */
+  /* ── Botão principal → aponta para o APK no GitHub Releases ── */
   var mainBtn = document.getElementById("downloadBtn");
   if (mainBtn) {
-    mainBtn.setAttribute("href", "./" + APK.file);
-    mainBtn.setAttribute("download", "Tuctuc-" + APK.version + ".apk");
-  }
-
-  /* ── Valida se o APK existe antes de baixar (evita link quebrado
-     enquanto o build ainda não foi publicado). Só via http(s). ── */
-  if (mainBtn && location.protocol.indexOf("http") === 0) {
-    mainBtn.addEventListener("click", function (e) {
-      if (mainBtn.dataset.verified === "ok") return;
-      e.preventDefault();
-      fetch("./" + APK.file, { method: "HEAD" })
-        .then(function (res) {
-          if (res.ok) {
-            mainBtn.dataset.verified = "ok";
-            window.location.href = "./" + APK.file;
-          } else {
-            showUnavailable();
-          }
-        })
-        .catch(function () {
-          mainBtn.dataset.verified = "ok";
-          window.location.href = "./" + APK.file;
-        });
-    });
-  }
-
-  function showUnavailable() {
-    if (!hint) return;
-    hint.textContent = "O arquivo do app ainda não está disponível aqui. Tente novamente em instantes.";
-    hint.hidden = false;
-    hint.scrollIntoView({ behavior: "smooth", block: "center" });
+    mainBtn.setAttribute("href", APK.url);
   }
 
   /* ── Scroll suave para âncoras internas ── */
