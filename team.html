@@ -14,21 +14,23 @@
   <style>
     /* ─────────── Página EQUIPE — paleta e hierarquia do app (theme.js) ─────────── */
     :root {
-      /* Verdes da marca (mesmos valores de theme.js / styles.css) */
-      --green-900: #2D5016;   /* fundo (surface.inverse escuro da marca) */
+      --green-900: #2D5016;   /* fundo */
       --green-800: #3D6B1E;
       --green-700: #4E8726;
       --green-600: #6AA33C;
       --green-500: #89BF58;   /* destaque / pílula */
-      --green-100: #E9F5DF;
       --neutral-0: #FFFFFF;
 
       --bg:      var(--green-900);
       --pill:    var(--green-500);
-      --pill-h:  var(--green-600);   /* hover: só troca de cor, sem transform */
-      --on-pill: #17300B;            /* texto escuro sobre a pílula lime */
-      --paper:   #F4F8EE;            /* texto claro sobre fundo escuro */
-      --muted:   rgba(244,248,238,.72);
+      --pill-h:  var(--green-600);
+      --on-pill: #17300B;
+      --paper:   #F4F8EE;
+      --muted:   rgba(244, 248, 238, .72);
+
+      /* Diâmetro do círculo — fluido, recalculado por faixa (ver @media) */
+      --d: clamp(92px, 10.5vw, 120px);
+      --gap: clamp(10px, 1.4vw, 16px);
 
       --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       --sans: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -36,20 +38,17 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
     body {
-      background: var(--bg);
-      color: var(--paper);
-      font-family: var(--sans);
-      min-height: 100vh;
+      background: var(--bg); color: var(--paper);
+      font-family: var(--sans); min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; border-radius: 4px; }
 
     .topbar {
-      font-family: var(--mono);
-      font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+      font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 22px;
-      background: var(--green-800);
+      padding: 14px clamp(16px, 4vw, 28px); background: var(--green-800);
     }
     .topbar a { text-decoration: none; color: var(--paper); }
     .topbar a:hover { color: var(--green-500); }
@@ -57,78 +56,86 @@
 
     .wrap {
       max-width: 1140px; margin: 0 auto;
-      padding: 48px 22px 72px;
-      display: grid; grid-template-columns: 1.15fr 1fr; gap: 44px; align-items: center;
+      padding: clamp(32px, 5vw, 56px) clamp(16px, 4vw, 28px) clamp(48px, 7vw, 76px);
+      display: grid; grid-template-columns: 1.15fr 1fr;
+      gap: clamp(28px, 4vw, 48px); align-items: center;
     }
 
-    /* ── Grade de círculos: integrantes + decorativos (flat, sem borda/sombra) ── */
+    /* ── Grade de círculos: colunas de diâmetro fixo (var --d), sem sombra/borda ── */
     .grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-      width: 100%; max-width: 520px;
+      display: grid;
+      grid-template-columns: repeat(4, var(--d));
+      grid-auto-rows: var(--d);
+      gap: var(--gap);
+      justify-content: start;
     }
-    .deco {
-      aspect-ratio: 1 / 1; border-radius: 50%;
-      background: var(--green-800);
-    }
+    .deco { border-radius: 50%; background: var(--green-800); }
     .deco.d-2 { background: var(--green-700); }
     .deco.d-3 { background: var(--green-600); }
 
-    /* Integrante = 3 colunas (círculo + pílula). Sem sombra, sem transform. */
-    .member { grid-column: span 3; display: flex; align-items: center; text-decoration: none; }
+    /* Integrante = 3 colunas; altura travada em var(--d) → foto sempre circular */
+    .member {
+      grid-column: span 3; height: var(--d);
+      display: flex; align-items: center; min-width: 0; text-decoration: none;
+    }
     .avatar {
-      flex: 0 0 auto; height: 100%; aspect-ratio: 1 / 1;
+      flex: 0 0 auto; width: var(--d); height: var(--d);
       border-radius: 50%; overflow: hidden;
       display: grid; place-items: center;
       background: var(--neutral-0); color: var(--on-pill);
-      font-weight: 700; font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 700; font-size: calc(var(--d) * .28);
       z-index: 2;
     }
     .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .member.initials .avatar { background: var(--pill); }
 
     .plate {
-      flex: 1 1 auto; align-self: center;
-      margin-left: -26px;               /* pílula sobrepõe o círculo (ref.) */
-      padding: 14px 18px 14px 42px;
-      min-height: 76%;
+      flex: 1 1 auto; min-width: 0; align-self: center;
+      height: calc(var(--d) * .82);
+      margin-left: calc(var(--d) * -.22);   /* pílula sobrepõe o círculo (ref.) */
+      padding: 0 clamp(14px, 1.6vw, 20px) 0 calc(var(--d) * .28);
       display: flex; flex-direction: column; justify-content: center; gap: 2px;
       background: var(--pill); color: var(--on-pill);
-      border-radius: 999px;             /* borderRadius.full do app */
-      position: relative;
+      border-radius: 999px; position: relative;
       transition: background-color .12s ease;
     }
-    .plate .name { font-size: clamp(15px, 1.9vw, 21px); font-weight: 700; line-height: 1.05; }
-    .plate .role { font-size: clamp(11px, 1.3vw, 13px); font-weight: 500; opacity: .8; }
+    .plate .name { font-size: clamp(15px, 1.5vw, 19px); font-weight: 700; line-height: 1.08; }
+    .plate .role { font-size: clamp(11px, 1.1vw, 12.5px); font-weight: 500; opacity: .8; line-height: 1.2; }
     .plate .in {
       position: absolute; top: 9px; right: 15px;
       font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; opacity: .7;
     }
-    .member:hover .plate { background: var(--pill-h); }   /* só cor, sem movimento */
+    .member:hover .plate { background: var(--pill-h); }
 
-    /* ── Título (hierarquia do app: heading forte + secundário) ── */
-    .lead { position: relative; }
+    /* ── Título (hierarquia do app) ── */
+    .lead { min-width: 0; }
     .year   { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--green-500); }
-    .kicker {
-      font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--muted); margin: 24px 0 12px;
-    }
-    .title { font-size: clamp(38px, 5.4vw, 64px); line-height: .98; font-weight: 700; letter-spacing: -.01em; }
+    .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 24px 0 12px; }
+    .title  { font-size: clamp(36px, 5.4vw, 62px); line-height: .98; font-weight: 700; letter-spacing: -.01em; text-wrap: balance; }
     .title .hl { color: var(--green-500); }
-    .sub { margin-top: 20px; max-width: 44ch; color: var(--muted); font-size: 15px; line-height: 1.55; }
-    .pageno { margin-top: 38px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--green-500); }
+    .sub    { margin-top: 20px; max-width: 44ch; color: var(--muted); font-size: clamp(14px, 1.4vw, 15px); line-height: 1.55; }
+    .tag    { margin-top: 36px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--green-500); }
 
     /* ── Responsivo ── */
+    /* Uma coluna: grade centralizada, diâmetro recalculado p/ largura cheia */
     @media (max-width: 900px) {
-      .wrap { grid-template-columns: 1fr; gap: 34px; }
+      :root { --d: clamp(96px, 15vw, 120px); }
+      .wrap { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 40px); }
       .lead { order: -1; }
-      .grid { max-width: 560px; margin: 0 auto; }
+      .kicker { margin-top: 4px; }
+      .grid { justify-content: center; }
     }
-    @media (max-width: 560px) {
-      .grid { display: flex; flex-direction: column; gap: 14px; }
+    /* Telas estreitas: sem matriz decorativa, integrantes viram lista limpa */
+    @media (max-width: 640px) {
+      .grid { display: flex; flex-direction: column; gap: 12px; }
       .deco { display: none; }
-      .member { grid-column: auto; width: 100%; }
-      .avatar { height: 72px; width: 72px; }
-      .plate { min-height: 72px; }
+      .member { grid-column: auto; width: 100%; height: clamp(68px, 19vw, 84px); }
+      .avatar { width: clamp(68px, 19vw, 84px); height: clamp(68px, 19vw, 84px); font-size: 22px; }
+      .plate { height: clamp(60px, 16vw, 74px); margin-left: -22px; padding-left: 34px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .plate { transition: none; }
     }
   </style>
 </head>
@@ -204,9 +211,9 @@
     <section class="lead">
       <p class="year">2026</p>
       <p class="kicker">Equipe · TCC</p>
-      <h1 class="title">As mentes<br />por trás do<br /><span class="hl">Tuctuc</span></h1>
+      <h1 class="title">As mentes por trás do <span class="hl">Tuctuc</span></h1>
       <p class="sub">O grupo por trás do projeto de caronas solidárias entre estudantes. Conecte-se com a gente no LinkedIn.</p>
-      <p class="pageno">PÁGINA 11</p>
+      <p class="tag">04 INTEGRANTES</p>
     </section>
 
   </main>
